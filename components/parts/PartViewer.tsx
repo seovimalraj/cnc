@@ -1,8 +1,6 @@
 "use client";
 import { Suspense, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
 
 function Placeholder() {
   return (
@@ -30,7 +28,6 @@ export default function PartViewer({ src }: { src?: string }) {
         <Suspense fallback={<Placeholder />}>
           <RemoteModel src={src} />
         </Suspense>
-        <OrbitControls enableDamping />
       </Canvas>
     </div>
   );

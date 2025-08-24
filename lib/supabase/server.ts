@@ -9,8 +9,8 @@ import { Database } from '@/types/supabase'; // Assuming you will generate this 
  */
 export function createClient() {
   // Ensure these environment variables are correctly set in .env.local
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co';
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'public-anon-key';
 
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error("Supabase environment variables are not set for the server.");

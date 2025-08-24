@@ -7,7 +7,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator'; // shadcn/ui Separator
-import { QuoteChat } from '@/components/quotes/QuoteChat';
 import { format } from 'date-fns';
 import { DollarSign, FileText, Package, CheckCircle2, XCircle, Info, Clock, CreditCard } from 'lucide-react';
 import { getSignedUrl } from '@/lib/storage';
@@ -263,7 +262,7 @@ export default async function QuoteDetailPage({ params }: QuoteDetailPageProps) 
 
       {/* Real-time Chat Card */}
       <div className="h-[600px] lg:h-[700px]"> {/* Fixed height for chat */}
-        <QuoteChat quoteId={quoteId} currentUserProfile={profile} />
+        {/* Quote chat disabled */}
       </div>
     </div>
   );

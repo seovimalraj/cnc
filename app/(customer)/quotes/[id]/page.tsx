@@ -1,10 +1,10 @@
-import { createServerClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 interface Props { params: { id: string } }
 
 export default async function QuoteDetailPage({ params }: Props) {
-  const supabase = createServerClient();
+  const supabase = createClient();
   const { data: quote, error } = await supabase
     .from("quotes")
     .select("id,status,total,created_at,items,customer_notes,pricing_breakdown")

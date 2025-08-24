@@ -47,7 +47,6 @@ import {
   PlusCircle
 } from 'lucide-react';
 import { getSignedUrl } from '@/lib/storage';
-import { QuoteChat } from '@/components/quotes/QuoteChat';
 import { UserProfile } from '@/lib/auth';
 import { AdminQuoteLineItemEditor } from '@/components/quotes/AdminQuoteLineItemEditor'; // New component
 
@@ -413,7 +412,7 @@ export default function AdminQuoteDetailPage() {
 
       {/* Real-time Chat Card */}
       <div className="h-[600px] lg:h-[700px]">
-        {currentProfile && <QuoteChat quoteId={quote.id} currentUserProfile={currentProfile} />}
+        {/* Chat feature disabled pending implementation */}
       </div>
     </div>
   );

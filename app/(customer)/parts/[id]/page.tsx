@@ -1,11 +1,11 @@
-import { createServerClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import PartViewer from "@/components/parts/PartViewer";
 
 interface Props { params: { id: string } }
 
 export default async function PartDetailPage({ params }: Props) {
-  const supabase = createServerClient();
+  const supabase = createClient();
   const { data: part, error } = await supabase
     .from("parts")
     .select("id,name,storage_path,material,finish,meta")

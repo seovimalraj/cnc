@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { messageCreateSchema } from '@/lib/validators/message';
 import { z } from 'zod';
-import { uploadFileToStorage, getSignedUrl } from '@/lib/storage'; // Re-use storage utility
+import { uploadFileToStorage, getSignedUrl } from '@/lib/storage-server'; // Re-use storage utility
 import { revalidatePath } from 'next/cache';
 
 /**

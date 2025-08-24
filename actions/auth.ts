@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use server";
 import { redirect } from "next/navigation";
-import { createServerClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getSession() {
-  const supabase = createServerClient();
+  const supabase = createClient();
   const { data } = await supabase.auth.getSession();
   return data.session ?? null;
 }

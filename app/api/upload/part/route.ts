@@ -1,7 +1,7 @@
 // app/api/upload/part/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { uploadFileToStorage } from '@/lib/storage';
+import { uploadFileToStorage } from '@/lib/storage-server';
 import { partCreateSchema, abandonedQuoteCreateSchema, fileSchema } from '@/lib/validators/part';
 import { z } from 'zod';
 
