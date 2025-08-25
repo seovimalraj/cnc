@@ -7,7 +7,7 @@ import { format, subDays } from 'date-fns';
 
 /**
  * Server Action to fetch data for the Admin Dashboard KPIs and Feeds.
- * This aggregates various metrics and recent activities.
+ * This aggregates various metrics and recent activities
  */
 export async function fetchAdminDashboardData() {
   const { user, profile } = await getUserAndProfile();
