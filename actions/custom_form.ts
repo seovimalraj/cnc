@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { customFormSchema, CustomFormDefinition } from '@/lib/validators/form';
 
-// --- Generic Authorization Helper (reused) ---
+// --- Generic Authorization  Helper (reused) ---
 async function authorizeAdminOrStaff() {
   const { user, profile } = await getUserAndProfile();
   if (!user || !profile || !['admin', 'staff'].includes(profile.role)) {
