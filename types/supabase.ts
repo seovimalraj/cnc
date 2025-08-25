@@ -1,6 +1,6 @@
 /** 
  * GENERATED FILE PLACEHOLDER
- * --------------------------------------------
+ * -------------------------------------------
  * Replace this file by running the Supabase CLI:
  *   npx supabase gen types typescript \
  *     --project-id <YOUR_SUPABASE_PROJECT_REF> \
