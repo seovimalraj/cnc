@@ -20,7 +20,7 @@ async function authorizeAdminOrStaff() {
 
 /**
  * Server Action to fetch all abandoned quote records for the admin panel.
- * Includes associated part details for display.
+ * Includes associated part details for display
  */
 export async function getAllAbandonedQuotesForAdmin() {
   await authorizeAdminOrStaff();
