@@ -20,7 +20,7 @@ async function authorizeAdminOrStaff() {
 
 /**
  * Server Action to fetch all customers for the admin panel.
- * Includes owner profile details for display.
+ * Includes owner profile details for display
  */
 export async function getAllCustomersForAdmin() {
   await authorizeAdminOrStaff();
