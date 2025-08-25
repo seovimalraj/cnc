@@ -4,7 +4,7 @@ This repository contains the full-stack Next.js application for a CNC customer p
 Table of Contents
 Features
 
-Technology Stack
+Technology Stac
 
 Getting Started
 
