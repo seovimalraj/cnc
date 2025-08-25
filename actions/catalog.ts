@@ -19,7 +19,7 @@ async function authorizeAdminOrStaff() {
   return { user, profile };
 }
 
-// --- Materials CRUD ---
+// --- Materials  CRUD ---
 
 /**
  * Fetches all materials from the database.
