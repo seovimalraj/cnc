@@ -16,7 +16,7 @@ export async function fetchCustomFormById(formId: string) {
   const supabase = createServerSupabase();
 
   // If no user, only allow if form audience is 'public' (which isn't directly supported by our schema yet, but for future thought)
-  // For now, require user to be logged in to view customer-facing forms
+  // For now, require user to be logged in to view customer-facing form
   if (!user || !profile) {
     return { error: 'Unauthorized: User not authenticated.' };
   }
