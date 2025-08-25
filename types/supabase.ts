@@ -1,4 +1,4 @@
-/**
+/** 
  * GENERATED FILE PLACEHOLDER
  * --------------------------------------------
  * Replace this file by running the Supabase CLI:
