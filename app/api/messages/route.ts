@@ -1,6 +1,6 @@
 // app/api/messages/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { messageCreateSchema } from '@/lib/validators/message';
 import { z } from 'zod';
@@ -12,7 +12,7 @@ import { revalidatePath } from 'next/cache';
  * This route is intended for POST requests to create a new message.
  */
 export async function POST(request: NextRequest) {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { user, profile } = await getUserAndProfile();
 
   if (!user || !profile) {

@@ -1,5 +1,5 @@
 // app/(customer)/quotes/page.tsx
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import { FileText, PlusCircle } from 'lucide-react';
 
 export default async function CustomerQuotesPage() {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { user, profile } = await getUserAndProfile();
 
   if (!user || !profile) {

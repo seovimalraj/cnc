@@ -1,6 +1,6 @@
 // app/api/upload/part/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { uploadFileToStorage } from '@/lib/storage-server';
 import { partCreateSchema, abandonedQuoteCreateSchema, fileSchema } from '@/lib/validators/part';
 import { z } from 'zod';
@@ -10,7 +10,7 @@ import { z } from 'zod';
  * Supports both authenticated user uploads and anonymous abandoned quote capture.
  */
 export async function POST(request: NextRequest) {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const formData = await request.formData();
   const file = formData.get('file') as File | null;
   const isAnonymousStr = formData.get('isAnonymous') as string | null;

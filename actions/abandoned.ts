@@ -1,7 +1,7 @@
 // actions/abandoned.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -24,7 +24,7 @@ async function authorizeAdminOrStaff() {
  */
 export async function getAllAbandonedQuotesForAdmin() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: abandonedQuotes, error } = await supabase
     .from('abandoned_quotes')
@@ -46,7 +46,7 @@ export async function getAllAbandonedQuotesForAdmin() {
  */
 export async function claimAbandonedQuote(abandonedQuoteId: string) {
   const { user, profile } = await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const validatedInput = claimAbandonedQuoteSchema.safeParse({ abandonedQuoteId });
   if (!validatedInput.success) {
@@ -94,7 +94,7 @@ export async function claimAbandonedQuote(abandonedQuoteId: string) {
  */
 export async function deleteAbandonedQuote(abandonedQuoteId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { error } = await supabase
     .from('abandoned_quotes')

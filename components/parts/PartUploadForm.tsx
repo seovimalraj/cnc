@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { createBrowserClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 export default function PartUploadForm() {
-  const supabase = createBrowserClient();
+  const supabase = createClient();
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);

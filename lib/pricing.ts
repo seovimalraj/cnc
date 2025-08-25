@@ -1,6 +1,6 @@
 // lib/pricing.ts
 // @ts-nocheck
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { Database } from '@/types/supabase'; // Assuming you have this type generated
 import { z } from 'zod';
 
@@ -91,7 +91,7 @@ function estimateMachiningTime(volume_mm3: number, bbox: any): number {
  * @returns {Promise<QuoteLineItemResult | null>} The calculated quote line item or null if an error occurs.
  */
 export async function calculateInstantQuote(input: PricingInput): Promise<QuoteLineItemResult | null> {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   try {
     // 1. Fetch Part Geometry

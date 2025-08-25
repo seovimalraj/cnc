@@ -1,7 +1,7 @@
 // actions/form.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { customFormSchema, CustomFormDefinition, customFormResponseSchema, CustomFormResponseInput } from '@/lib/validators/form';
 import { revalidatePath } from 'next/cache';
@@ -13,7 +13,7 @@ import { z } from 'zod';
  */
 export async function fetchCustomFormById(formId: string) {
   const { user, profile } = await getUserAndProfile();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // If no user, only allow if form audience is 'public' (which isn't directly supported by our schema yet, but for future thought)
   // For now, require user to be logged in to view customer-facing forms
@@ -52,7 +52,7 @@ export async function fetchCustomFormById(formId: string) {
  */
 export async function submitCustomFormResponse(formId: string, responseData: CustomFormResponseInput) {
   const { user, profile } = await getUserAndProfile();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   if (!user || !profile) {
     return { error: 'Unauthorized: User not authenticated.' };

@@ -1,7 +1,7 @@
 // actions/customer.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -24,7 +24,7 @@ async function authorizeAdminOrStaff() {
  */
 export async function getAllCustomersForAdmin() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: customers, error } = await supabase
     .from('customers')
@@ -46,7 +46,7 @@ export async function getAllCustomersForAdmin() {
  */
 export async function getCustomerDetailsForAdmin(customerId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: customer, error } = await supabase
     .from('customers')
@@ -78,7 +78,7 @@ export async function updateCustomerInfo(customerId: string, input: Omit<Custome
     return { error: 'Invalid customer info data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('customers')
     .update({ ...validatedInput.data, updated_at: new Date().toISOString() })
@@ -106,7 +106,7 @@ export async function updateCustomerAddressByAdmin(customerId: string, type: 'bi
     return { error: `Invalid ${type} data provided.`, details: validatedAddress.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const updatePayload = {
     [type]: validatedAddress.data,
     updated_at: new Date().toISOString(),
@@ -135,7 +135,7 @@ export async function updateCustomerAddressByAdmin(customerId: string, type: 'bi
  */
 export async function deleteCustomerByAdmin(customerId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { error } = await supabase
     .from('customers')

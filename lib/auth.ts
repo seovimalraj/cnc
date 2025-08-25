@@ -1,6 +1,6 @@
 // lib/auth.ts
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import type { User } from '@supabase/supabase-js';
 
@@ -23,7 +23,7 @@ export type UserProfile = {
  * @returns {Promise<{ user: User | null; profile: UserProfile | null }>} The authenticated user and their profile.
  */
 export async function getUserAndProfile() {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -87,7 +87,7 @@ export function requireAdminOrStaff(redirectTo: string = '/dashboard') {
 export async function logout() {
   'use server'; // Marks this function as a Server Action
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { error } = await supabase.auth.signOut();
 
   if (error) {
@@ -103,7 +103,7 @@ export async function logout() {
 export async function signInWithGoogle() {
   'use server';
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {

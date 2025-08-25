@@ -108,7 +108,7 @@ Date Utilities: date-fns
 
 Unique IDs: uuid
 
-Supabase SDKs: @supabase/supabase-js, @supabase/auth-helpers-nextjs
+Supabase SDKs: @supabase/supabase-js, @supabase/ssr
 
 3D Viewer (Stub): @react-three/fiber, three
 

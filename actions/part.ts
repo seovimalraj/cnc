@@ -1,7 +1,7 @@
 // actions/part.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -41,7 +41,7 @@ export type AdminPartUpdateInput = z.infer<typeof adminPartUpdateSchema>;
  */
 export async function getAllPartsForAdmin() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: parts, error } = await supabase
     .from('parts')
@@ -63,7 +63,7 @@ export async function getAllPartsForAdmin() {
  */
 export async function getPartDetailsForAdmin(partId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: part, error } = await supabase
     .from('parts')
@@ -98,7 +98,7 @@ export async function updatePartByAdmin(input: AdminPartUpdateInput) {
   }
 
   const { id, ...updates } = validatedInput.data;
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data, error } = await supabase
     .from('parts')
@@ -124,7 +124,7 @@ export async function updatePartByAdmin(input: AdminPartUpdateInput) {
  */
 export async function deletePartByAdmin(partId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // First, retrieve the part details to get the file_url
   const { data: partToDelete, error: fetchError } = await supabase

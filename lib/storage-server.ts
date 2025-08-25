@@ -1,5 +1,5 @@
 // lib/storage.ts
-import { createClient as createBrowserClient } from '@/lib/supabase/client'; // Using browser client for signed URL generation on client
+import { createClient } from '@/lib/supabase/client'; // Using browser client for signed URL generation on client
 import { v4 as uuidv4 } from 'uuid'; // For generating unique file names
 import { FileObject } from '@supabase/storage-js';
 
@@ -18,8 +18,8 @@ const SHORT_TTL_SECONDS = 60 * 5; // 5 minutes for preview URLs
  * @returns {Promise<{ filePath: string | null; error: Error | null }>} The uploaded file path or an error.
  */
 export async function uploadFileToStorage(file: File, bucketName: string, userId: string) {
-  const { createClient } = await import('@/lib/supabase/server');
-  const supabase = createClient(); // Server-side client for auth
+  const { createServerSupabase } = await import('@/lib/supabase/server');
+  const supabase = createServerSupabase(); // Server-side client for auth
   const fileExtension = file.name.split('.').pop();
   const fileName = `${userId}/${uuidv4()}.${fileExtension}`; // Organize by user ID
 
@@ -49,7 +49,7 @@ export async function uploadFileToStorage(file: File, bucketName: string, userId
  * @returns {Promise<{ signedUrl: string | null; error: Error | null }>} The signed URL or an error.
  */
 export async function getSignedUrl(bucketName: string, filePath: string, expiresInSeconds: number = SHORT_TTL_SECONDS) {
-  const supabase = createBrowserClient(); // Client-side for public anon key usage for signed URL generation
+  const supabase = createClient(); // Client-side for public anon key usage for signed URL generation
   const { data, error } = await supabase.storage
     .from(bucketName)
     .createSignedUrl(filePath, expiresInSeconds);
@@ -72,8 +72,8 @@ export async function getSignedUrl(bucketName: string, filePath: string, expires
  * @returns {Promise<{ files: FileObject[] | null; error: Error | null }>} The list of files or an error.
  */
 export async function listUserFiles(bucketName: string, userId: string, prefix: string = '') {
-  const { createClient } = await import('@/lib/supabase/server');
-  const supabase = createClient();
+  const { createServerSupabase } = await import('@/lib/supabase/server');
+  const supabase = createServerSupabase();
   const { data, error } = await supabase.storage
     .from(bucketName)
     .list(`${prefix}${userId}`, {
@@ -99,8 +99,8 @@ export async function listUserFiles(bucketName: string, userId: string, prefix: 
  * @returns {Promise<{ error: Error | null }>} An error if deletion fails.
  */
 export async function deleteFileFromStorage(bucketName: string, filePath: string) {
-  const { createClient } = await import('@/lib/supabase/server');
-  const supabase = createClient();
+  const { createServerSupabase } = await import('@/lib/supabase/server');
+  const supabase = createServerSupabase();
   const { error } = await supabase.storage
     .from(bucketName)
     .remove([filePath]);

@@ -1,7 +1,7 @@
 // actions/custom_form.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -36,7 +36,7 @@ export type AdminFormInput = z.infer<typeof adminFormInputSchema>;
  */
 export async function getAllCustomFormsForAdmin() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: customForms, error } = await supabase
     .from('custom_forms')
@@ -55,7 +55,7 @@ export async function getAllCustomFormsForAdmin() {
  */
 export async function getCustomFormDetailsForAdmin(formId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: form, error } = await supabase
     .from('custom_forms')
@@ -93,7 +93,7 @@ export async function createCustomForm(input: AdminFormInput) {
     return { error: 'Invalid form data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('custom_forms')
     .insert({
@@ -128,7 +128,7 @@ export async function updateCustomForm(formId: string, input: AdminFormInput) {
     return { error: 'Invalid form data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('custom_forms')
     .update({
@@ -161,7 +161,7 @@ export async function updateCustomForm(formId: string, input: AdminFormInput) {
  */
 export async function deleteCustomForm(formId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { error } = await supabase
     .from('custom_forms')

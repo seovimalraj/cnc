@@ -1,7 +1,7 @@
 // actions/profile.ts
 'use server'; // All functions in this file are Server Actions
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile, UserProfile } from '@/lib/auth';
 import { profileUpdateSchema, ProfileUpdateInput, addressSchema, AddressInput } from '@/lib/validators/profile';
 import { revalidatePath } from 'next/cache';
@@ -17,7 +17,7 @@ export async function fetchUserAccountData() {
     return { error: 'Unauthorized: User not authenticated.' };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // Fetch customer data linked to the profile
   const { data: customer, error: customerError } = await supabase
@@ -51,7 +51,7 @@ export async function updateProfile(input: ProfileUpdateInput) {
     return { error: 'Invalid profile data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { error } = await supabase
     .from('profiles')
@@ -94,7 +94,7 @@ export async function updateCustomerAddress(type: 'billing_address' | 'shipping_
     return { error: `Invalid ${type} data provided.`, details: validatedAddress.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // First, try to find an existing customer record for this profile
   const { data: existingCustomer, error: fetchError } = await supabase

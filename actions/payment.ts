@@ -1,7 +1,7 @@
 // actions/payment.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -38,7 +38,7 @@ export type AdminPaymentUpdateInput = z.infer<typeof adminPaymentUpdateSchema>;
  */
 export async function getAllPaymentsForAdmin() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: payments, error } = await supabase
     .from('payments')
@@ -61,7 +61,7 @@ export async function getAllPaymentsForAdmin() {
  */
 export async function getPaymentDetailsForAdmin(paymentId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: payment, error } = await supabase
     .from('payments')
@@ -96,7 +96,7 @@ export async function updatePaymentByAdmin(input: AdminPaymentUpdateInput) {
   }
 
   const { id, ...updates } = validatedInput.data;
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data, error } = await supabase
     .from('payments')
@@ -132,7 +132,7 @@ export async function updatePaymentByAdmin(input: AdminPaymentUpdateInput) {
  */
 export async function deletePaymentByAdmin(paymentId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { error } = await supabase
     .from('payments')

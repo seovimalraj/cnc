@@ -1,12 +1,12 @@
 // app/(customer)/dashboard/page.tsx
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'; // shadcn/ui Card components
 import Link from 'next/link';
 import { format } from 'date-fns';
 
 export default async function CustomerDashboardPage() {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { user, profile } = await getUserAndProfile();
 
   if (!user || !profile) {

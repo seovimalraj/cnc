@@ -1,5 +1,5 @@
 // app/(customer)/quote/[id]/page.tsx
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile, UserProfile } from '@/lib/auth';
 import { notFound, redirect } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -58,7 +58,7 @@ const getStatusIcon = (status: string) => {
 
 export default async function QuoteDetailPage({ params }: QuoteDetailPageProps) {
   const { id: quoteId } = params;
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { user, profile } = await getUserAndProfile();
 
   if (!user || !profile) {

@@ -1,7 +1,7 @@
 // actions/user.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile, UserProfile } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -40,7 +40,7 @@ export type AdminProfileUpdateInput = z.infer<typeof adminProfileUpdateSchema>;
  */
 export async function getAllUserProfilesForAdmin() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // Fetch all profiles
   const { data: profiles, error } = await supabase
@@ -79,7 +79,7 @@ export async function updateUserProfileByAdmin(input: AdminProfileUpdateInput) {
     return { error: 'You cannot deactivate your own account.' };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // First, update the public.profiles table
   const { error: profileUpdateError } = await supabase
@@ -141,7 +141,7 @@ export async function deleteUserProfileByAdmin(userId: string) {
       return { error: 'You cannot delete your own account.' };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // First, delete related customer data if it exists
   const { error: deleteCustomerError } = await supabase

@@ -1,5 +1,5 @@
 // app/(customer)/parts/page.tsx
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -28,7 +28,7 @@ function PartPreview3D({ fileUrl }: { fileUrl: string }) {
 
 
 export default async function CustomerPartsPage() {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { user } = await getUserAndProfile();
 
   if (!user) {

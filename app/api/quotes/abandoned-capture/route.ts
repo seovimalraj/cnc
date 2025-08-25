@@ -1,6 +1,6 @@
 // app/api/quotes/abandoned-capture/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { emailCaptureSchema } from '@/lib/validators/part'; // Reusing the email capture schema
 
@@ -9,7 +9,7 @@ import { emailCaptureSchema } from '@/lib/validators/part'; // Reusing the email
  * This is called after an anonymous user uploads a CAD file and provides their email.
  */
 export async function POST(request: NextRequest) {
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const body = await request.json();
 
   // Validate the request body

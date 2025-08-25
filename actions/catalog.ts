@@ -1,7 +1,7 @@
 // actions/catalog.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { materialSchema, MaterialInput, finishSchema, FinishInput, toleranceSchema, ToleranceInput } from '@/lib/validators/catalog';
 import { revalidatePath } from 'next/cache';
@@ -26,7 +26,7 @@ async function authorizeAdminOrStaff() {
  */
 export async function getMaterials() {
   await authorizeAdminOrStaff(); // Ensure only authorized users can fetch
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('materials')
     .select('*')
@@ -50,7 +50,7 @@ export async function createMaterial(input: MaterialInput) {
     return { error: 'Invalid material data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('materials')
     .insert({ ...validatedInput.data, created_by: profile.id })
@@ -77,7 +77,7 @@ export async function updateMaterial(id: string, input: MaterialInput) {
     return { error: 'Invalid material data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('materials')
     .update({ ...validatedInput.data, updated_at: new Date().toISOString() })
@@ -99,7 +99,7 @@ export async function updateMaterial(id: string, input: MaterialInput) {
  */
 export async function deleteMaterial(id: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { error } = await supabase
     .from('materials')
     .delete()
@@ -122,7 +122,7 @@ export async function deleteMaterial(id: string) {
  */
 export async function getFinishes() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('finishes')
     .select('*')
@@ -146,7 +146,7 @@ export async function createFinish(input: FinishInput) {
     return { error: 'Invalid finish data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('finishes')
     .insert({ ...validatedInput.data, created_by: profile.id })
@@ -173,7 +173,7 @@ export async function updateFinish(id: string, input: FinishInput) {
     return { error: 'Invalid finish data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('finishes')
     .update({ ...validatedInput.data, updated_at: new Date().toISOString() })
@@ -195,7 +195,7 @@ export async function updateFinish(id: string, input: FinishInput) {
  */
 export async function deleteFinish(id: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { error } = await supabase
     .from('finishes')
     .delete()
@@ -218,7 +218,7 @@ export async function deleteFinish(id: string) {
  */
 export async function getTolerances() {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('tolerances')
     .select('*')
@@ -242,7 +242,7 @@ export async function createTolerance(input: ToleranceInput) {
     return { error: 'Invalid tolerance data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('tolerances')
     .insert({ ...validatedInput.data, created_by: profile.id })
@@ -269,7 +269,7 @@ export async function updateTolerance(id: string, input: ToleranceInput) {
     return { error: 'Invalid tolerance data provided.', details: validatedInput.error.flatten() };
   }
 
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data, error } = await supabase
     .from('tolerances')
     .update({ ...validatedInput.data, updated_at: new Date().toISOString() })
@@ -291,7 +291,7 @@ export async function updateTolerance(id: string, input: ToleranceInput) {
  */
 export async function deleteTolerance(id: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { error } = await supabase
     .from('tolerances')
     .delete()

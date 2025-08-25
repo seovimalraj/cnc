@@ -1,7 +1,7 @@
 // actions/quote.ts
 'use server'; // Mark all functions in this file as Server Actions
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { calculateInstantQuote, PricingInput, pricingInputSchema } from '@/lib/pricing';
 import { getUserAndProfile } from '@/lib/auth';
 import { z } from 'zod';
@@ -37,7 +37,7 @@ export async function getInstantQuoteResult(input: PricingInput) {
   }
 
   // Fetch the user's profile to get their region for rate card selection
-  const supabase = createClient();
+  const supabase = createServerSupabase();
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('region')
@@ -87,7 +87,7 @@ export async function calculateAndSaveDraftQuote(input: PricingInput) {
   const quoteResult = calculateResult.data;
 
   // 4. Save the quote and its line items
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   try {
     // a. Create the main quote record
@@ -167,7 +167,7 @@ export async function calculateAndSaveDraftQuote(input: PricingInput) {
  */
 export async function getAllQuotesForAdmin() {
   await authorizeAdminOrStaff(); // Ensure only authorized users can fetch
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data, error } = await supabase
     .from('quotes')
@@ -195,7 +195,7 @@ export async function getAllQuotesForAdmin() {
  */
 export async function getQuoteDetailsForAdmin(quoteId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data: quote, error: quoteError } = await supabase
     .from('quotes')
@@ -226,7 +226,7 @@ export async function getQuoteDetailsForAdmin(quoteId: string) {
  */
 export async function updateQuoteStatus(quoteId: string, newStatus: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // Basic validation for newStatus (should match enum in schema)
   const validStatuses = ['draft','sent','accepted','rejected','expired','abandoned','paid','in_production','completed'];
@@ -284,7 +284,7 @@ export async function updateQuoteLineItem(itemId: string, updates: {
   pricing_breakdown?: any; // If pricing is recalculated manually
 }) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { data, error } = await supabase
     .from('quote_items')
@@ -325,7 +325,7 @@ export async function addQuoteLineItem(quoteId: string, itemData: {
   quantity: number;
 }) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // First, calculate the pricing for the new item
   const pricingInput: PricingInput = {
@@ -377,7 +377,7 @@ export async function addQuoteLineItem(quoteId: string, itemData: {
  */
 export async function deleteQuoteLineItem(itemId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   // Get the quote_id before deleting to revalidate correctly
   const { data: itemToDelete, error: fetchError } = await supabase
@@ -414,7 +414,7 @@ export async function deleteQuoteLineItem(itemId: string) {
  */
 export async function deleteQuote(quoteId: string) {
   await authorizeAdminOrStaff();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   const { error } = await supabase
     .from('quotes')

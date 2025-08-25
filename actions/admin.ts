@@ -1,7 +1,7 @@
 // actions/admin.ts
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { getUserAndProfile } from '@/lib/auth';
 import { format, subDays } from 'date-fns';
 
@@ -11,7 +11,7 @@ import { format, subDays } from 'date-fns';
  */
 export async function fetchAdminDashboardData() {
   const { user, profile } = await getUserAndProfile();
-  const supabase = createClient();
+  const supabase = createServerSupabase();
 
   if (!user || !profile || !['admin', 'staff'].includes(profile.role)) {
     return { error: 'Unauthorized: Admin or Staff role required.' };
